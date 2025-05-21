@@ -19,9 +19,9 @@ export const ThemeProvider: React.FC<{
     if (savedTheme) {
       setDarkMode(JSON.parse(savedTheme));
     } else {
-      // Check user's preferred color scheme
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setDarkMode(prefersDark);
+      // Default to light mode for new users
+      setDarkMode(false);
+      localStorage.setItem('darkMode', 'false');
     }
   }, []);
   useEffect(() => {

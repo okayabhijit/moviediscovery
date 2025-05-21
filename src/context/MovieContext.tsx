@@ -27,6 +27,7 @@ type MovieContextType = {
   currentPage: number;
   isLoading: boolean;
   error: string | null;
+  setHasStartedBrowsing: (value: boolean) => void;
 };
 
 const MovieContext = createContext<MovieContextType>({
@@ -43,7 +44,8 @@ const MovieContext = createContext<MovieContextType>({
   totalResults: 0,
   currentPage: 1,
   isLoading: false,
-  error: null
+  error: null,
+  setHasStartedBrowsing: () => {}
 });
 
 export const useMovies = () => useContext(MovieContext);
@@ -113,8 +115,12 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     if (searchQuery || selectedGenreId !== null || localStorage.getItem('hasSeenWelcome') === 'true') {
       setHasStartedBrowsing(true);
+      // Initial fetch of popular movies when browsing starts
+      if (!movies.length) {
+        fetchMovies(1);
+      }
     }
-  }, [searchQuery, selectedGenreId]);
+  }, [searchQuery, selectedGenreId, movies.length]);
 
   // Only fetch movies when user has started browsing
   useEffect(() => {
@@ -217,7 +223,8 @@ export const MovieProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         totalResults,
         currentPage,
         isLoading,
-        error
+        error,
+        setHasStartedBrowsing
       }}
     >
       {children}

@@ -11,7 +11,7 @@ interface FilterState {
   genreId: number | null;
 }
 
-interface FilterContextType {
+export interface FilterContextType {
   searchQuery: string;
   selectedGenre: string;
   selectedGenreId: number | null;

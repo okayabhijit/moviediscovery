@@ -41,10 +41,10 @@ const Home: React.FC = () => {
         {showWelcome ? (
           <div className="text-center py-16">
             <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-              <h2 className="text-3xl font-bold mb-4 dark:text-white">Welcome to MovieMagic</h2>
+              <h2 className="text-3xl font-bold mb-4 dark:text-white">What Should I Watch Tonight</h2>
               <p className="text-gray-600 dark:text-gray-300 mb-8 text-lg leading-relaxed">
                 Discover and explore your favorite movies. Use the search bar to find specific titles, actors or
-                browse by genres, or build your personal collection of favorites.
+                browse by genres, or build your personal collection of favorites to watch later.
               </p>
               <button
                 onClick={handleStartBrowsing}
