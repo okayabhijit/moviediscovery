@@ -9,7 +9,7 @@ import { FilterProvider } from './context/FilterContext';
 
 export function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/moviediscovery">
       <ThemeProvider>
         <FilterProvider>
           <MovieProvider>
