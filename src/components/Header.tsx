@@ -12,7 +12,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="flex items-center gap-2">
           <FilmIcon size={28} />
-          <span className="text-2xl font-bold hidden sm:inline">MovieMagic</span>
+          <span className="text-2xl font-bold hidden sm:inline">MovieDiscovery</span>
         </Link>
         
         <div className="flex items-center gap-3 sm:gap-6">
