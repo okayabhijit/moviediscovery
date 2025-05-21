@@ -16,7 +16,7 @@
     "test:ci": "jest --ci --coverage --maxWorkers=2 --silent --detectOpenHandles --forceExit",
     "validate": "npm-run-all --parallel test:ci lint build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist -u \"github-actions-bot <support+actions@github.com>\" -r https://x-access-token:${GITHUB_TOKEN}@github.com/okayabhijit/moviediscovery.git"
   },
   "dependencies": {
     "axios": "^1.9.0",
