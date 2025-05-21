@@ -27,7 +27,10 @@ const Grid: React.FC<GridProps> = ({
   };
 
   return (
-    <div className={`grid ${columnStyles[columns]} ${gapStyles[gap]} ${className}`}>
+    <div 
+      className={`grid ${columnStyles[columns]} ${gapStyles[gap]} ${className}`}
+      data-testid="grid"
+    >
       {children}
     </div>
   );

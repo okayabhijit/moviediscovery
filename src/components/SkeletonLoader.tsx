@@ -7,14 +7,21 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   className = ''
 }) => <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 ${className}`} />;
 
-export const MovieCardSkeleton: React.FC = () => <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg h-full">
-    <Skeleton className="h-64 w-full" />
-    <div className="p-4">
-      <Skeleton className="h-6 w-3/4 mb-2 rounded" />
-      <Skeleton className="h-4 w-1/2 mb-4 rounded" />
-      <Skeleton className="h-4 w-1/4 rounded" />
+export const MovieCardSkeleton: React.FC = () => {
+  return (
+    <div 
+      data-testid="movie-card-skeleton"
+      className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg h-full"
+    >
+      <Skeleton className="h-64 w-full" />
+      <div className="p-4">
+        <Skeleton className="h-6 w-3/4 mb-2 rounded" />
+        <Skeleton className="h-4 w-1/2 mb-4 rounded" />
+        <Skeleton className="h-4 w-1/4 rounded" />
+      </div>
     </div>
-  </div>;
+  );
+};
 
 export const MovieDetailSkeleton: React.FC = () => <div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl">
     <div className="md:flex">
