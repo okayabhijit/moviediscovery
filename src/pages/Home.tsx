@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../components/SearchBar';
 import GenreButtons from '../components/GenreButtons';
 import MovieCard from '../components/MovieCard';
@@ -9,10 +9,9 @@ import { useFilters } from '../context/FilterContext';
 import { Loader2Icon, Film } from 'lucide-react';
 
 const Home: React.FC = () => {
-  const { displayedMovies, filteredMovies, loadMore, hasMore, loadingMore } = useMovies();
+  const { displayedMovies, filteredMovies, loadMore, hasMore, loadingMore, setHasStartedBrowsing, isLoading } = useMovies();
   const { searchQuery, selectedGenreId } = useFilters();
   const { darkMode } = useTheme();
-  const [loading, setLoading] = useState(true);
   const [showWelcome, setShowWelcome] = useState(() => {
     // Check if user has seen welcome screen before
     return localStorage.getItem('hasSeenWelcome') !== 'true';
@@ -23,20 +22,14 @@ const Home: React.FC = () => {
     if (showWelcome && (searchQuery || selectedGenreId !== null)) {
       setShowWelcome(false);
       localStorage.setItem('hasSeenWelcome', 'true');
+      setHasStartedBrowsing(true);
     }
-  }, [searchQuery, selectedGenreId, showWelcome]);
-
-  useEffect(() => {
-    // Reset loading when movies are loaded or filtered
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
+  }, [searchQuery, selectedGenreId, showWelcome, setHasStartedBrowsing]);
 
   const handleStartBrowsing = () => {
     setShowWelcome(false);
     localStorage.setItem('hasSeenWelcome', 'true');
+    setHasStartedBrowsing(true); // This will trigger the movie fetch in MovieContext
   };
 
   return (
@@ -63,7 +56,7 @@ const Home: React.FC = () => {
               </button>
             </div>
           </div>
-        ) : loading ? (
+        ) : isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => <MovieCardSkeleton key={i} />)}
           </div>
