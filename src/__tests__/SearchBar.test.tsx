@@ -5,48 +5,47 @@ import { FilterProvider } from '../context/FilterContext';
 import config from '../utils/config';
 import { getData } from '../services';
 
-// Mock data
+// Mock data for genres
 const mockGenres = [
   { id: 1, name: 'Action' },
   { id: 2, name: 'Comedy' }
 ];
 
-// Mock the getData service
+// Mock the getData service to return mockGenres
 jest.mock('../services', () => ({
   getData: jest.fn().mockImplementation(() => Promise.resolve({ data: { genres: mockGenres } }))
 }));
 
-// Create a wrapper that handles the async initialization
-const FilterWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
-    <FilterProvider>
-      {children}
-    </FilterProvider>
-  );
-};
+/**
+ * Wrapper to provide FilterContext for SearchBar tests.
+ */
+const FilterWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <FilterProvider>{children}</FilterProvider>
+);
 
+/**
+ * SearchBar component tests.
+ * - Verifies rendering, debounce, clear, and empty input behaviors.
+ */
 describe('SearchBar', () => {
+  /**
+   * Helper to render SearchBar with context and wait for state updates.
+   */
   const renderSearchBar = async () => {
     let component;
-    // Set up initial localStorage state
+    // Set up initial localStorage state for genres
     localStorage.setItem('cachedGenres', JSON.stringify(mockGenres));
     localStorage.setItem('genresCachedAt', Date.now().toString());
-    
     await act(async () => {
-      component = render(<SearchBar />, {
-        wrapper: FilterWrapper
-      });
+      component = render(<SearchBar />, { wrapper: FilterWrapper });
     });
     // Wait for any pending state updates
-    await act(async () => {
-      await Promise.resolve();
-    });
+    await act(async () => { await Promise.resolve(); });
     return component;
   };
 
   beforeEach(() => {
     jest.useFakeTimers();
-    // Reset mocks
     localStorage.clear();
     (getData as jest.Mock).mockClear();
   });
@@ -67,18 +66,10 @@ describe('SearchBar', () => {
     await renderSearchBar();
     const user = userEvent.setup({ delay: null });
     const input = screen.getByRole('textbox');
-
-    await act(async () => {
-      await user.type(input, 'test movie');
-    });
+    await act(async () => { await user.type(input, 'test movie'); });
     expect(input).toHaveValue('test movie');
-
     // Fast-forward the debounce timeout
-    await act(async () => {
-      jest.advanceTimersByTime(config.SEARCH_DEBOUNCE_DELAY);
-    });
-
-    // Verify the input value remains
+    await act(async () => { jest.advanceTimersByTime(config.SEARCH_DEBOUNCE_DELAY); });
     expect(input).toHaveValue('test movie');
   });
 
@@ -86,17 +77,10 @@ describe('SearchBar', () => {
     await renderSearchBar();
     const user = userEvent.setup({ delay: null });
     const input = screen.getByRole('textbox');
-
-    await act(async () => {
-      await user.type(input, 'test movie');
-    });
+    await act(async () => { await user.type(input, 'test movie'); });
     expect(input).toHaveValue('test movie');
-
     const clearButton = screen.getByRole('button');
-    await act(async () => {
-      await user.click(clearButton);
-    });
-
+    await act(async () => { await user.click(clearButton); });
     expect(input).toHaveValue('');
   });
 

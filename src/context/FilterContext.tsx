@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { getData } from '../services';
+import config from '../utils/config';
 
 interface Genre {
   id: number;
@@ -73,10 +74,7 @@ export const FilterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         if (cachedData && cachedTimestamp) {
           const parsedData = JSON.parse(cachedData);
           const timestamp = parseInt(cachedTimestamp);
-          const now = Date.now();
-          const oneDay = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-          
-          if (now - timestamp < oneDay) {
+          const now = Date.now();          if (now - timestamp < config.CACHE_DURATION) {
             setGenres(parsedData);
             setIsLoadingGenres(false);
             return;

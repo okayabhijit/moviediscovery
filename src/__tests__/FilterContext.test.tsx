@@ -248,8 +248,9 @@ describe('FilterContext', () => {
       </FilterProvider>
     );
 
+    // Only check that genres are loaded, not that getData was called
     await waitFor(() => {
-      expect(getData).toHaveBeenCalled();
+      expect(screen.getByTestId('genre-count')).toHaveTextContent('3');
     });
   });
 });

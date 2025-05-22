@@ -1,15 +1,12 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 import config from '../utils/config';
-
-const BASE_URL = config.BASE_URL;
-const API_KEY = config.API_KEY;
 
 // Create an Axios instance with pre-configured settings
 const tmdbApiClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: config.TMDB_BASE_URL,
   params: {
-    api_key: API_KEY,
-    // language: 'en-US', // Optional default language
+    api_key: config.TMDB_API_KEY,
+    language: 'en-US',
   },
 });
 

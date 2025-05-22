@@ -25,9 +25,12 @@ const localStorageMock = {
 };
 
 // Global test setup
+let originalConsoleError: typeof console.error;
 beforeAll(() => {
   // Suppress console warnings in tests
   jest.spyOn(console, 'warn').mockImplementation(() => {});
+  // Save the original console.error
+  originalConsoleError = console.error;
   // Only show error for unexpected errors
   jest.spyOn(console, 'error').mockImplementation((message, ...args) => {
     if (typeof message === 'string' && (
@@ -37,7 +40,7 @@ beforeAll(() => {
     ) {
       return;
     }
-    console.error(message, ...args);
+    originalConsoleError(message, ...args);
   });
 });
 

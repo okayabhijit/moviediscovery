@@ -41,15 +41,16 @@ A movie discovery application built with React, TypeScript, and Tailwind CSS. Br
 
    npm install
 
-3. Configure environment variables:
+2. Configure your TMDB API key:
    
-   - Go to `src/utils/config.ts`
+   - Open `src/utils/config.ts`
+   - Replace the value of `TMDB_API_KEY` in the `config` object with your API key, e.g.:
+     ```typescript
+     TMDB_API_KEY: 'your_api_key_here',
+     ```
+   - Or, set the environment variable `VITE_TMDB_API_KEY` in a `.env` file at the project root for Vite to pick up automatically.
 
-   - Add your TMDB API key:
-
-    API_KEY=your_api_key_here
-
-4. Start the development server:
+3. Start the development server:
 
    npm run dev
 
@@ -63,17 +64,17 @@ The project uses Jest and React Testing Library for testing. To run tests:
 2. Run tests with coverage report:
    npm run test:coverage
 
-Current test coverage:
-- Statements: 41.45%
-- Branches: 23.27%
-- Functions: 29.09%
-- Lines: 40.49%
+### Current test coverage (as of May 22, 2025):
+- **Statements:** 34.92%
+- **Branches:** 19.58%
+- **Functions:** 24.32%
+- **Lines:** 34.04%
 
-Components with 100% coverage:
-- GenreButtons
-- SearchBar
-- Favorites (85.71% branches)
-- FilterContext (97.01% statements, 92.85% branches)
+#### Components with high coverage:
+- GenreButtons: 100%
+- SearchBar: 93.33% lines, 77.77% functions, 70% branches
+- Favorites: 85.71% statements, 85.18% lines, 83.33% functions
+- FilterContext: 97.01% statements, 96.87% lines, 100% functions, 92.85% branches
 
 ## CI/CD
 
